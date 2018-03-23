@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box1{
+				float:left;
+				width: 350px;
+				height: 500px;
+				border:solid 1px;
+				margin-left: 20px;
+				margin-top: 10px;
+				position: relative;
+			}
+			#box2{
+				float:left;
+				width: 350px;
+				height: 500px;
+				border:solid 1px;
+				margin-left: 20px;
+				margin-top: 10px;
+				overflow: hidden;
+				display: none;
+				position: relative;
+				
+			}
+			#img1{
+				width: 100%;
+			}
+			#img2{
+				width: 500%;
+				height: 500%;
+				position: absolute;
+			}
+			#jing{
+				width: 70px;
+				height:100px ;
+				background-color: rgba(0,0,0,0.5);
+				position: absolute;
+				left:0px;
+				top:0px;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='box1'>
+			<div id="jing"></div>
+			<img src="img/6.jpg" id='img1'/>
+		</div>
+		<div id='box2'>
+			<img src="img/6.jpg" id="img2"/>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var box1=document.querySelector("#box1");
+		var box2=document.querySelector("#box2");
+		var jing=document.querySelector("#jing");
+		var img1=document.querySelector("#img1");
+		var img2=document.querySelector("#img2");
+		
+		box1.onmousemove=function(e){
+			jing.style.display="block";
+			box2.style.display="block";
+			
+			var e=e||window.event;
+			
+			var x=e.clientX-box1.offsetLeft-jing.offsetWidth/2;
+			var y=e.clientY-box1.offsetTop-jing.offsetHeight/2;
+			if(x>=box1.clientWidth-jing.clientWidth){
+				
+				x=box1.clientWidth-jing.clientWidth;
+			}
+			if(x<=0){
+				x=0;
+			}
+			if(y>=box1.clientHeight-jing.clientHeight){
+				y=box1.clientHeight-jing.clientHeight;
+			}
+			if(y<=0){
+				y=0;
+			}
+			jing.style.left=x+"px";
+			jing.style.top=y+"px";
+			
+			var str=img1.offsetWidth/jing.offsetWidth;
+			img2.style.left=-x*str+"px";
+			img2.style.top=-y*str+"px";
+		}
+		
+		box1.onmouseout=function(){
+			jing.style.display="none";
+			box2.style.display="none";
+			
+		}
+	</script>
+</html>

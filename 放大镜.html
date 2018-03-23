@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			#div1{
+				width: 300px;
+				height:350px ;
+				border:solid red;
+				position: relative;
+				left:20px;
+				top:20px;
+				float:left;
+			}
+			
+			#div1 img{
+				width: 100%;
+				height: 100%;
+			}
+			
+			#div2{
+				width: 60px;
+				height: 60px;
+				background-color:rgba(0,0,0,0.5);
+				position: absolute;
+				left: 0px;
+				top:0px;
+				display: none;
+			}
+			#div3{
+				width: 300px;
+				height:350px ;
+				border:solid yellow;
+				float:left;
+				margin-top: 20px;
+				overflow: hidden;
+				margin-left: 50px;
+				display: none;
+				position:relative ;
+			}
+			
+			#img2{
+				width: 500%;
+				height: 520%;
+				position: absolute;
+				left:0px;
+				top:0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<img src="img/e45e59feca5929e2eb6a62f2b6a3c780.jpg" id="img1"/>
+			<div id="div2"></div>
+		</div>
+		<div id="div3">
+			<img src="img/e45e59feca5929e2eb6a62f2b6a3c780.jpg"  id="img2"/>
+		</div>
+	</body>
+	<script type="text/javascript">
+		
+//		获取对象
+		var div1=document.getElementById("div1");
+		var div2=document.getElementById("div2");
+		var div3=document.getElementById("div3");
+		var img1=document.getElementById("img1");
+		var img2=document.getElementById("img2");
+		
+//		给div1添加鼠标移动事件
+		div1.onmousemove=function(e){
+//			兼容
+			var e=event||window.event;
+//			显示div
+			div2.style.display="block";
+			div3.style.display="block";
+//			跟随鼠标移动，以鼠标光标表示div2放大镜的位置
+			var x=event.clientX-div1.offsetLeft-div2.offsetWidth/2;
+			var y=event.clientY-div1.offsetTop-div2.offsetHeight/2;
+			
+//			判断放大镜位置
+//			水平方向
+			if(x<0){
+				x=0;
+			}else if(x>div1.offsetWidth-div2.offsetWidth){
+				x=div1.offsetWidth-div2.offsetWidth
+			}
+//			垂直方向
+			if(y<0){
+				y=0;
+			}else if(y>div1.offsetHeight-div2.offsetHeight){
+				y=div1.offsetHeight-div2.offsetHeight;
+			}
+//			div2的位置
+			div2.style.left=x+"px";
+			div2.style.top=y+"px";
+			
+//			放大图片所在的位置
+			var str=img2.offsetWidth/img1.offsetWidth
+			img2.style.left=-x*str+"px";
+			img2.style.top=-y*str+"px";
+		}
+		
+//		移出鼠标隐藏
+		div1.onmouseout=function(){
+			div2.style.display="none";
+			div3.style.display="none";
+		}
+	</script>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#div1{
+				width: 100px;
+				height: 100px;
+				background-color: yellow;
+				border-radius: 50%;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+	</body>
+	<script type="text/javascript">
+		var body=document.getElementsByTagName("body")[0];
+		var div1=document.getElementById("div1");
+		
+		var arr=[];
+		for(var i=0; i<=150; i++){
+//			创建div
+			var div2=document.createElement("div");
+				div2.className="div2";
+//			设置大小
+				div2.style.width="50px";
+				div2.style.height="50px";
+//			设置位置
+				div2.style.position="absolute";
+				div2.style.left=parseInt(Math.random()*1366)+"px";
+				div2.style.top=parseInt(Math.random()*768)+"px";
+//				设置圆角
+				div2.style.borderRadius="50%";
+//				设置颜色
+				var r=parseInt(Math.random()*256);
+				var g=parseInt(Math.random()*256);
+				var b=parseInt(Math.random()*256);
+				div2.style.backgroundColor="rgb("+r+","+g+","+b+")";
+//				将生成的div放入数组中
+				arr.push(div2);	
+//				将div放入body中
+				body.appendChild(div2);
+		}
+//		添加鼠标按下事件
+		div1.onmousedown=function(event){
+//			兼容
+			var event=event||window.event;
+//			获取鼠标相对于事件对象的偏移量
+			var x=event.offsetX;
+			var y=event.offsetY;
+//			创建移动事件
+			document.onmousemove=function(event){
+				var event=event||window.event;
+//				获取鼠标对于可视相窗口的位置
+				var x1=event.clientX-x;
+				var y1=event.clientY-y;
+//				设置div1的位置
+				div1.style.left=x1+"px";
+				div1.style.top=y1+"px";
+				
+
+			
+//			判断临界线
+			var spee=3;
+			var w=div1.offsetWidth;
+			var h=div1.offsetHeight
+			for(var j=0;j<arr.length; j++){
+				var x2=arr[j].offsetLeft-div1.offsetWidth; //左
+				var x3=arr[j].offsetLeft+arr[j].offsetWidth; //右
+				
+				var y2=arr[j].offsetTop-div1.offsetHeight; //上
+				var y3=arr[j].offsetTop+arr[j].offsetHeight; //下
+				
+				if(x1>x2 && x1<x3 && y1>y2 && y1<y3){
+					
+					
+						arr[j].remove();
+						div1.style.width=w+spee+"px";
+						div1.style.height=h+spee+"px";
+					}
+						
+				}
+			
+			}
+		}
+		
+//		鼠标松开事件
+
+		document.onmouseup=function(){
+			document.onmousemove=null;
+		}
+	</script>
+</html>
